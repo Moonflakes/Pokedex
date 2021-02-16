@@ -12,7 +12,8 @@
       elevation="2"
       @click="pokemonSort('type')"
     >sort by type</v-btn>
-    <input class="form-control" type="text" v-model="searchQuery" placeholder="Search by name" />
+    <input class="form-control" type="text" v-model="searchName" placeholder="Search by name" />
+    <input class="form-control" type="text" v-model="searchType" placeholder="Search by type" />
     <div v-for="(pokemon, index) in filteredPokemons"
         :key="index"
         >
@@ -32,16 +33,22 @@ export default {
   data () {
     return {
       pokemons: [],
-      searchQuery: null
+      searchName: null,
+      searchType: null
     }
   },
   computed: {
     filteredPokemons(){
-      if(this.searchQuery){
-      return this.pokemons.filter((pokemon)=>{
-        return this.searchQuery.toLowerCase().split(' ').every(v => pokemon.name.toLowerCase().includes(v))
+      if(this.searchName){
+        return this.pokemons.filter((pokemon)=>{
+          return this.searchName.toLowerCase().split(' ').every(v => pokemon.name.toLowerCase().includes(v))
       })
-      }else{
+      }else if(this.searchType){
+        return this.pokemons.filter((pokemon)=>{
+          return this.searchType.toLowerCase().split(' ').every(v => pokemon.types[0].type.name.toLowerCase().includes(v))
+        })
+      }
+      else{
         return this.pokemons;
       }
     }
