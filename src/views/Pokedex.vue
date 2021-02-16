@@ -12,7 +12,8 @@
       elevation="2"
       @click="pokemonSort('type')"
     >sort by type</v-btn>
-    <div v-for="(pokemon, index) in pokemons"
+    <input class="form-control" type="text" v-model="searchQuery" placeholder="Search by name" />
+    <div v-for="(pokemon, index) in filteredPokemons"
         :key="index"
         >
           <pokemon-card :pokemon="pokemon"></pokemon-card>
@@ -30,11 +31,23 @@ export default {
   },
   data () {
     return {
-      pokemons: []
+      pokemons: [],
+      searchQuery: null
+    }
+  },
+  computed: {
+    filteredPokemons(){
+      if(this.searchQuery){
+      return this.pokemons.filter((pokemon)=>{
+        return this.searchQuery.toLowerCase().split(' ').every(v => pokemon.name.toLowerCase().includes(v))
+      })
+      }else{
+        return this.pokemons;
+      }
     }
   },
   mounted () {
-    for (let i = 0; i <= 20; i++) {
+    for (let i = 1; i <= 20; i++) {
       axios
       .get(`https://pokeapi.co/api/v2/pokemon/${i}/`)
       .then(response => {
