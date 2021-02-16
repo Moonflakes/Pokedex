@@ -15,7 +15,8 @@
     <div v-for="(pokemon, index) in pokemons"
         :key="index"
         >
-          <v-card
+          <pokemon-card :pokemon="pokemon"></pokemon-card>
+          <!-- <v-card
             class="mx-auto"
             max-width="344"
             outlined
@@ -47,17 +48,7 @@
                 :src="pokemon.sprites.front_default"
               ></v-list-item-avatar>
             </v-list-item>
-
-            <!-- <v-card-actions>
-              <v-btn
-                outlined
-                rounded
-                text
-              >
-                Button
-              </v-btn>
-            </v-card-actions> -->
-          </v-card>
+          </v-card> -->
     </div>
     
   </div>
@@ -65,11 +56,11 @@
 
 <script>
 import axios from 'axios';
-// import { PokemonCard } from '@/components/PokemonCard.vue';
+import PokemonCard from '../components/PokemonCard.vue';
 export default {
-  // components: {
-  //   PokemonCard
-  // },
+  components: {
+    PokemonCard
+  },
   data () {
     return {
       pokemons: []
