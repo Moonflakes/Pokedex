@@ -1,7 +1,20 @@
 <template>
   <div class="about">
+    <v-btn
+      elevation="2"
+      @click="pokemonSort('id')"
+    >sort by id</v-btn>
+    <v-btn
+      elevation="2"
+      @click="pokemonSort('name')"
+    >sort by name</v-btn>
+    <v-btn
+      elevation="2"
+      @click="pokemonSort('type')"
+    >sort by type</v-btn>
     <div v-for="(pokemon, index) in pokemons"
-        :key="index">
+        :key="index"
+        >
           <v-card
             class="mx-auto"
             max-width="344"
@@ -73,7 +86,23 @@ export default {
         this.errors.push(e)
       })
     }
-    
+  },
+  methods: {
+    pokemonSort(by) {
+      console.log(this.pokemons)
+      if (by === "id")
+        this.pokemons.sort((a, b) => a.id - b.id);
+      if (by === "name")
+        this.pokemons.sort(function(a, b){
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;});
+      if (by === "type")
+        this.pokemons.sort(function(a, b){
+          if(a.types[0].type.name < b.types[0].type.name) { return -1; }
+          if(a.types[0].type.name > b.types[0].type.name) { return 1; }
+          return 0;});
+    }
   }
 }
 </script>
